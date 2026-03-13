@@ -46,14 +46,113 @@ p,li{font-size:22px;line-height:1.36;color:var(--text);margin:0}
 .footer{position:absolute;left:78px;right:78px;bottom:24px;display:flex;align-items:center;justify-content:space-between;color:#9fb1d6;font-size:18px}
 .footer .brand{font-weight:800;color:#dcebff}
 #controls{position:absolute;right:18px;bottom:18px;display:flex;gap:8px;z-index:40;flex-wrap:wrap;justify-content:flex-end;max-width:620px}
-.btn{appearance:none;border:none;background:#10203f;color:#eef5ff;padding:10px 13px;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;border:1px solid #2c416d}
-.btn:hover{filter:brightness(1.08)}
+.btn{appearance:none;border:none;background:transparent;color:rgba(180,200,240,.3);
+  padding:10px 13px;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;
+  border:1px solid transparent;transition:color .2s,border-color .2s,background .2s}
+.btn:hover{color:#eef5ff;border-color:#2c416d;background:rgba(16,32,63,.85)}
 #counter{position:absolute;left:50%;transform:translateX(-50%);bottom:20px;font-size:17px;color:#d6e4ff;background:rgba(8,12,24,.86);padding:8px 14px;border-radius:999px;border:1px solid #25365e;z-index:40}
 #progress{position:absolute;left:0;right:0;bottom:0;height:6px;background:rgba(255,255,255,.05);z-index:40}
 #bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2))}
 hr.sep{border:none;border-top:1px solid var(--line);margin:16px 0}
 .note{font-size:16px;color:var(--muted);margin-top:8px}
 .hidden{display:none}
+
+#cp-overlay{position:absolute;inset:0;z-index:100;background:rgba(4,8,20,.88);
+  display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.cp-box{background:linear-gradient(180deg,#0f1830,#08101f);border:1px solid #243356;
+  border-radius:24px;padding:40px 48px;max-width:920px;width:90%}
+.cp-kicker{color:#7dd3fc;font-size:13px;letter-spacing:.1em;text-transform:uppercase;
+  font-weight:800;margin-bottom:12px}
+.cp-kicker.ex{color:#c084fc}
+.cp-q{font-size:22px;line-height:1.35;color:#f4f7ff;margin-bottom:20px}
+.cp-scenario{font-size:18px;line-height:1.42;color:#b9c6e6;margin-bottom:14px}
+.cp-opt-btn{display:block;width:100%;text-align:left;background:#0d1a35;
+  border:1px solid #243356;color:#eef4ff;padding:12px 16px;border-radius:12px;
+  font-size:18px;cursor:pointer;margin:8px 0;transition:border-color .15s}
+.cp-opt-btn:hover{border-color:#7dd3fc}
+.cp-opt-btn.correct{border-color:#67e8f9!important;color:#67e8f9}
+.cp-opt-btn.wrong{border-color:#fb7185!important;color:#fb7185}
+.dm-opt-btn{background:#0d1a35;border:1px solid #243356;color:#eef4ff;
+  padding:12px 26px;border-radius:12px;font-size:18px;cursor:pointer;margin:6px;transition:border-color .15s}
+.dm-opt-btn:hover{border-color:#c084fc}
+.dm-opt-btn.correct{border-color:#67e8f9!important;color:#67e8f9}
+.dm-opt-btn.wrong{border-color:#fb7185!important;color:#fb7185}
+.cp-exp{display:none;margin-top:16px;padding:14px 16px;border-left:4px solid #7dd3fc;
+  background:rgba(125,211,252,.08);border-radius:12px;font-size:18px;line-height:1.35;color:#eef4ff}
+.cp-result{display:none;margin-top:16px;font-size:18px;line-height:1.38}
+.cp-continue{display:none;margin-top:20px;background:#10203f;color:#eef5ff;
+  padding:12px 22px;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;
+  border:1px solid #2c416d}
+.cp-continue:hover{filter:brightness(1.1)}
+#idx-panel{position:absolute;top:0;right:0;bottom:0;width:340px;background:#08101f;
+  border-left:1px solid #1b2745;z-index:50;overflow-y:auto;display:none;padding:18px 14px}
+#idx-panel.open{display:block}
+.idx-title{font-size:13px;letter-spacing:.09em;text-transform:uppercase;
+  color:#7dd3fc;font-weight:800;margin-bottom:12px;padding:0 4px}
+.idx-item{display:block;width:100%;text-align:left;background:none;border:none;
+  color:#b9c6e6;font-size:14px;line-height:1.28;padding:7px 8px;border-radius:8px;cursor:pointer;margin:2px 0}
+.idx-item:hover{background:#101e3d;color:#eef4ff}
+.idx-item.active-idx{background:#102544;color:#7dd3fc;font-weight:700}
+.idx-group{color:#c084fc;font-weight:800;font-size:12px;text-transform:uppercase;
+  letter-spacing:.1em;margin-top:10px;padding:4px 8px}
+
+
+/* ── Responsive scaling ──────────────────────────────── */
+#stage{transform-origin:top left}
+
+@media (max-width:900px){
+  html,body{overflow:auto;height:auto}
+  #deck-shell{width:100%;min-height:100vh;background:#040814;
+    align-items:flex-start;justify-content:flex-start;padding:0}
+  #stage{width:100%!important;height:auto!important;min-height:100vh;
+    border-radius:0;border:none;position:relative;
+    transform:none!important;padding:0;display:flex;flex-direction:column}
+  .slide{position:relative!important;display:none;
+    padding:24px 18px 110px 18px;flex-direction:column}
+  .slide.active{display:flex}
+  h1{font-size:24px!important;line-height:1.15}
+  h2{font-size:20px!important}
+  h3{font-size:17px!important}
+  h4{font-size:12px!important}
+  p,li{font-size:16px!important;line-height:1.42}
+  .small p,.small li{font-size:14px!important}
+  .lead{font-size:18px!important}
+  .quote{font-size:18px!important}
+  .kicker{font-size:11px!important}
+  .pill{font-size:14px!important;padding:6px 11px}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr!important;gap:10px}
+  .topline{margin-bottom:8px}
+  .center{height:auto;padding:10px 0}
+  .callout p{font-size:15px!important}
+  .table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .cell{font-size:13px!important;padding:9px 11px;white-space:normal}
+  .cell.head{font-size:11px!important}
+  #controls{position:fixed;left:0;right:0;bottom:0;max-width:100%;
+    flex-wrap:wrap;justify-content:center;gap:5px;
+    background:rgba(4,8,20,.96);border-top:1px solid #1b2745;
+    padding:8px 10px;border-radius:0;z-index:40}
+  .btn{font-size:13px;padding:8px 11px;border-radius:9px;
+    color:rgba(180,200,240,.55)!important}
+  .btn:hover{color:#eef5ff!important;border-color:#2c416d!important;
+    background:rgba(16,32,63,.85)!important}
+  #counter{bottom:68px;font-size:13px}
+  #progress{bottom:62px;height:4px}
+  .footer{left:18px;right:18px;bottom:14px;font-size:14px}
+  #idx-panel{width:100%!important;top:auto;height:60vh;border-left:none;
+    border-top:1px solid #1b2745}
+  .cp-box{padding:26px 20px}
+  .cp-q{font-size:18px!important}
+  .cp-scenario{font-size:15px!important}
+  .cp-opt-btn,.dm-opt-btn{font-size:15px!important;padding:10px 13px}
+  .cp-exp{font-size:15px!important}
+}
+
+/* ── Viewport scale for mid-range screens ── */
+@media (min-width:901px) and (max-width:1640px){
+  html,body{overflow:hidden}
+  #deck-shell{overflow:hidden}
+}
+
 </style></head>
 <body><div id="deck-shell"><div id="stage">
 <section class="slide " data-index="0">
@@ -363,33 +462,181 @@ Artifact usage shall depend on system lifecycle state.</li></ul></div><div class
 <div class="footer"><div class="brand">Bhargav Nerayanoor</div><div>Use ← → keys, buttons, or F for fullscreen</div></div>
 </section>
 <div id="counter"></div>
-<div id="controls"><button class="btn" id="home">Home</button><button class="btn" id="m1">Module 1</button><button class="btn" id="brk">Break</button><button class="btn" id="m2">Module 2</button><button class="btn" id="prev">◀ Prev</button><button class="btn" id="next">Next ▶</button><button class="btn" id="fs">Fullscreen</button></div>
+<div id="idx-panel"><div class="idx-title">Slide index</div><div id="idx-list"></div></div>
+<div id="controls"><button class="btn" id="home">Home</button><button class="btn" id="m1">Module 1</button><button class="btn" id="brk">Break</button><button class="btn" id="m2">Module 2</button><button class="btn" id="prev">◀ Prev</button><button class="btn" id="next">Next ▶</button><button class="btn" id="idx-toggle">Index</button><button class="btn" id="fs">Fullscreen</button></div>
 <div id="progress"><div id="bar"></div></div>
 </div></div><script>
 const slides=[...document.querySelectorAll('.slide')];
 let index=0;
-const labels = {module1:0, breakpt:31, module2:32};
-function show(i){
-  index=(i+slides.length)%slides.length;
+const labels={module1:0,breakpt:31,module2:32};
+
+function saveProgress(){try{localStorage.setItem('sas_v2',index);}catch(e){}}
+function loadProgress(){try{return parseInt(localStorage.getItem('sas_v2'))||0;}catch(e){return 0;}}
+
+const checkpoints={
+  11:{q:"Which interaction violates a Monitoring domain profile assumption?",
+    opts:["A SCADA client reads breaker status within its authorized scope",
+          "An engineering tool polls every IED at 100 ms to gather measurements",
+          "A historian collects event logs from bay controllers",
+          "An operator browses the HMI for current alarm state"],
+    correct:1,
+    exp:"Non-intrusiveness is a Monitoring invariant. Aggressive polling from an engineering tool degrades time-critical functions — a profile violation regardless of intent."},
+  15:{q:"A valid select-before-operate sequence completes. Lifecycle state is Maintenance. What follows?",
+    opts:["The command is safe — the procedure was followed correctly",
+          "The command may be unsafe — lifecycle state must be evaluated alongside workflow integrity",
+          "The command is invalid because SBO does not apply in maintenance mode",
+          "Retry in normal state and the command becomes valid"],
+    correct:1,
+    exp:"Workflow completion is necessary but not sufficient. Control authority must also consider lifecycle state. Maintenance-mode commands acting on live plant are a known failure pattern."},
+  19:{q:"A configuration change is written successfully to an IED. What has NOT been established?",
+    opts:["The write operation succeeded",
+          "The change is safe and consistent with current operational state",
+          "The device accepted the payload",
+          "The session was authorized"],
+    correct:1,
+    exp:"Write success confirms transport, not safety. Staging, validation against lifecycle state, and activation approval are all separate from the write itself."},
+  23:{q:"A vendor artifact has a proprietary binary format — semantics are unknown. What does Engineering domain require?",
+    opts:["Exemption from governance since semantics cannot be verified",
+          "Integrity, provenance, staging, and lifecycle governance regardless of opacity",
+          "Human review of source code before activation",
+          "Rejection until an open IEC 61850 format is provided"],
+    correct:1,
+    exp:"Opaque governance is explicit in the Engineering domain. Lack of semantic openness does not excuse lack of governance. Provenance, integrity, and lifecycle controls apply to all artifacts."}
+};
+
+const exercises={
+  56:{scenario:"An external actor uses remote access footholds, gains visibility into operator workflows, then abuses remote control pathways. Reachability is mistaken for legitimacy.",
+    answer:"Control",opts:["Monitoring","Control","Configuration","Engineering"]},
+  58:{scenario:"A settings file or parameter block is altered and later activated. The actor may be malicious or merely careless. Utilities do not get a discount because the outage was accidental.",
+    answer:"Configuration",opts:["Monitoring","Control","Configuration","Engineering"]},
+  60:{scenario:"The objective is not to flip a breaker. It is to blind the operator, suppress alarms, or keep everyone serenely wrong while another action happens elsewhere.",
+    answer:"Monitoring",opts:["Monitoring","Control","Configuration","Engineering"]},
+  62:{scenario:"The attacker subverts the place where system reality is authored: the engineering workstation, the vendor tool, or the artifact pipeline.",
+    answer:"Engineering",opts:["Monitoring","Control","Configuration","Engineering"]}
+};
+
+function mkOverlay(){
+  const o=document.createElement('div');
+  o.id='cp-overlay';
+  document.getElementById('stage').appendChild(o);
+  return o;
+}
+
+function showCheckpoint(idx,onCont){
+  const cp=checkpoints[idx];
+  const o=mkOverlay();
+  o.innerHTML=`<div class="cp-box">
+    <div class="cp-kicker">Knowledge check — before you continue</div>
+    <div class="cp-q">${cp.q}</div>
+    <div id="cpo">${cp.opts.map((t,i)=>`<button class="cp-opt-btn" data-i="${i}">${String.fromCharCode(65+i)}. ${t}</button>`).join('')}</div>
+    <div class="cp-exp" id="cpx">${cp.exp}</div>
+    <button class="cp-continue" id="cpc">Continue &#8594;</button></div>`;
+  let done=false;
+  o.querySelectorAll('.cp-opt-btn').forEach(b=>{
+    b.addEventListener('click',()=>{
+      if(done)return;done=true;
+      const i=parseInt(b.dataset.i);
+      o.querySelectorAll('.cp-opt-btn').forEach((x,n)=>{
+        if(n===cp.correct)x.classList.add('correct');
+        else if(n===i)x.classList.add('wrong');
+        x.style.cursor='default';});
+      o.querySelector('#cpx').style.display='block';
+      o.querySelector('#cpc').style.display='inline-block';});});
+  o.querySelector('#cpc').addEventListener('click',()=>{o.remove();onCont();});
+}
+
+function showExercise(idx,onCont){
+  const ex=exercises[idx];
+  const o=mkOverlay();
+  o.innerHTML=`<div class="cp-box">
+    <div class="cp-kicker ex">Case study — identify the primary domain</div>
+    <div class="cp-scenario">${ex.scenario}</div>
+    <div class="cp-q">Which functional domain is the primary target?</div>
+    <div>${ex.opts.map(d=>`<button class="dm-opt-btn" data-d="${d}">${d}</button>`).join('')}</div>
+    <div class="cp-result" id="dmr"></div>
+    <button class="cp-continue" id="dmc">See the breakdown &#8594;</button></div>`;
+  let done=false;
+  o.querySelectorAll('.dm-opt-btn').forEach(b=>{
+    b.addEventListener('click',()=>{
+      if(done)return;done=true;
+      const ok=b.dataset.d===ex.answer;
+      o.querySelectorAll('.dm-opt-btn').forEach(x=>{
+        if(x.dataset.d===ex.answer)x.classList.add('correct');
+        else if(x===b&&!ok)x.classList.add('wrong');
+        x.style.cursor='default';});
+      const r=o.querySelector('#dmr');r.style.display='block';
+      r.innerHTML=ok
+        ?`<span style="color:#67e8f9;font-weight:700">Correct.</span> Primary domain: <strong>${ex.answer}</strong>. Next slide shows which assumptions broke.`
+        :`<span style="color:#fb7185;font-weight:700">Not quite.</span> Primary domain: <strong>${ex.answer}</strong>. Next slide shows why.`;
+      o.querySelector('#dmc').style.display='inline-block';});});
+  o.querySelector('#dmc').addEventListener('click',()=>{o.remove();onCont();});
+}
+
+function show(i,force=false){
+  const t=(i+slides.length)%slides.length;
+  if(!force&&t>index){
+    if(checkpoints[index]){showCheckpoint(index,()=>show(t,true));return;}
+    if(exercises[index]){showExercise(index,()=>show(t,true));return;}
+  }
+  index=t;
   slides.forEach((s,n)=>s.classList.toggle('active',n===index));
   counter.textContent=`Slide ${index+1} / ${slides.length}`;
   bar.style.width=((index+1)/slides.length*100)+'%';
+  updateIdx();saveProgress();
 }
+
+function buildIdx(){
+  const list=document.getElementById('idx-list');
+  const marks={0:'Module 1',32:'Module 2'};
+  slides.forEach((s,i)=>{
+    if(marks[i]){const g=document.createElement('div');g.className='idx-group';g.textContent=marks[i];list.appendChild(g);}
+    const h1=s.querySelector('h1');
+    const b=document.createElement('button');
+    b.className='idx-item';b.dataset.idx=i;
+    b.textContent=`${i+1}. ${h1?h1.textContent.trim().substring(0,50):'—'}`;
+    b.title=h1?h1.textContent.trim():'';
+    b.addEventListener('click',()=>show(i,true));
+    list.appendChild(b);});
+}
+function updateIdx(){
+  document.querySelectorAll('.idx-item[data-idx]').forEach(b=>{
+    b.classList.toggle('active-idx',parseInt(b.dataset.idx)===index);});
+  const a=document.querySelector('.idx-item.active-idx');
+  if(a)a.scrollIntoView({block:'nearest'});
+}
+buildIdx();
+
 prev.onclick=()=>show(index-1);
 next.onclick=()=>show(index+1);
 home.onclick=()=>show(0);
-if (window.m1) m1.onclick=()=>show(labels.module1 ?? 0);
-if (window.brk) brk.onclick=()=>show(labels.breakpt ?? 0);
-if (window.m2) m2.onclick=()=>show(labels.module2 ?? 0);
-fs.onclick=()=>{ if(!document.fullscreenElement){document.documentElement.requestFullscreen();} else {document.exitFullscreen();} };
+if(window.m1)m1.onclick=()=>show(labels.module1??0);
+if(window.brk)brk.onclick=()=>show(labels.breakpt??0);
+if(window.m2)m2.onclick=()=>show(labels.module2??0);
+fs.onclick=()=>{if(!document.fullscreenElement){document.documentElement.requestFullscreen();}else{document.exitFullscreen();}};
+document.getElementById('idx-toggle').onclick=()=>{document.getElementById('idx-panel').classList.toggle('open');};
 document.addEventListener('keydown',e=>{
   if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(index+1);}
   if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){e.preventDefault();show(index-1);}
   if(e.key.toLowerCase()==='f'){e.preventDefault();fs.click();}
   if(e.key==='Home'){e.preventDefault();show(0);}
-  if(e.key==='1' && labels.module1!==null){e.preventDefault();show(labels.module1);}
-  if(e.key==='2' && labels.module2!==null){e.preventDefault();show(labels.module2);}
-  if((e.key==='b' || e.key==='B') && labels.breakpt!==null){e.preventDefault();show(labels.breakpt);}
+  if(e.key==='1'&&labels.module1!==null){e.preventDefault();show(labels.module1);}
+  if(e.key==='2'&&labels.module2!==null){e.preventDefault();show(labels.module2);}
+  if((e.key==='b'||e.key==='B')&&labels.breakpt!==null){e.preventDefault();show(labels.breakpt);}
 });
-show(0);
+show(loadProgress());
+
+/* ── Viewport scaling for desktop non-fullscreen ── */
+function scaleStage(){
+  if(window.innerWidth<=900)return;
+  const stage=document.getElementById('stage');
+  const scaleX=window.innerWidth/1600;
+  const scaleY=window.innerHeight/900;
+  const scale=Math.min(scaleX,scaleY);
+  stage.style.transform=`scale(${scale})`;
+  stage.style.marginLeft=`${(window.innerWidth-1600*scale)/2}px`;
+  stage.style.marginTop=`${(window.innerHeight-900*scale)/2}px`;
+}
+window.addEventListener('resize',scaleStage);
+scaleStage();
+
 </script></body></html>
